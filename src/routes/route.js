@@ -1,57 +1,20 @@
-const express = require("express");
-
-
+const express = require('express');
 const router = express.Router();
+// const UserModel= require("../models/userModel.js")
+// const UserController= require("../controllers/userController")
+const BookController= require("../controllers/bookController") // importing from the book controller
 
-let players = [
-  {
-    name: "manish",
-    dob: "1/1/1995",
-    gender: "male",
-    city: "jalandhar",
-    sports: ["swimming"],
-  },
-  {
-    name: "gopal",
-    dob: "1/09/1995",
-    gender: "male",
-    city: "delhi",
-    sports: ["soccer"],
-  },
-  {
-    name: "lokesh",
-    dob: "1/1/1990",
-    gender: "male",
-    city: "mumbai",
-    sports: ["soccer"],
-  },
-];
+router.get("/test-me", function (req, res) {
+    res.send("My first ever api!")
+})
 
-router.post("/players", function (req, res) {
-  let data = req.body;
-  players.map((item) => {
-    if (item.name === data.name) return res.send("Error");
-  });
-  players.push(data);
-  // console.log(data.name);
-  return res.send(players);
+//router.post("/createUser", UserController.createUser  )
 
-  // res.send({ data: players, status: true });
-  // console.log(players);
-});
-router.post("/players1", function (req, res) {
-  let data = req.body.age;
-  let arr = [1, 2, 3, 4, 5, 7];
-  arr.push(data);
-  console.log(arr);
-  // res.send({ "The new array is ": arr });
-  console.log(data);
-  res.send({ "The age is ": data, "The new array is": arr });
-});
-router.get("/players2", function (req, res) {
-  let person = req.body.name;
-  let person1 = req.body.last;
-  let perso2 = req.body.name;
-});
+//router.get("/getUsersData", UserController.getUsersData)
+
+router.post("/createBook", BookController.createBook)
+
+router.get("/getBookData", BookController.getBookData)
+
 module.exports = router;
-// adding this comment for no reason
+
