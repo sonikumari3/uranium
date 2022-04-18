@@ -1,19 +1,14 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose"); // mongooose help us to create the
 
-const authorSchema = new mongoose.Schema(
+const ObjectId = mongoose.Schema.Types.ObjectId;
+
+const authorModelSchema = new mongoose.Schema(
   {
-    author_id: {
-      type: Number,
-      required: true,
-    },
-    author_name: {
-      type: String,
-      required: true,
-    },
+    authorName: String,
     age: Number,
     address: String,
+    rating: Number,
   },
   { timestamps: true }
 );
-
-module.exports = mongoose.model("authormodel", authorSchema);
+module.exports = mongoose.model("newAuthor", authorModelSchema);
