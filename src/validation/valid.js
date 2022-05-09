@@ -1,13 +1,13 @@
-const userModel = require('../model/userModel')
+// const userModel = require('../model/userModel')
 
-const isValid = function(value){
+// const isValid = function(value){
 
-    if (typeof (value)==='undefined'|| typeof(value)=== null){ return false }
+//     if (typeof (value)==='undefined'|| typeof(value)=== null){ return false }
 
-    if (typeof(value)=== "string" && (value).trim().length == 0){return false } 
+//     if (typeof(value)=== "string" && (value).trim().length == 0){return false } 
     
-    return true
+//     return true
 
-}
+// }
 
-module.exports.isValid = isValid;
+// module.exports.isValid = isValid;

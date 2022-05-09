@@ -2,7 +2,7 @@ const { default: mongoose } = require('mongoose')
 const userModel = require('../model/userModel')
 const jwt = require('jsonwebtoken')
 const moment = require('moment')
-// const isValid = require('../validation/valid')
+
 
 const isValidRequestBody =function(requestBody){
     return Object.keys(requestBody).length == 0
@@ -18,7 +18,6 @@ const isValid = function(value){
 }
 const isValidObjectId = function(ObjectId){
     return mongoose.Types.ObjectId.isValidObjectId
-
 }
 
 
@@ -82,21 +81,18 @@ const loginUser = async function(req,res){
     let password = req.body.password
     let user = await userModel.findOne({email : userName,password : password})
     if(!user){
-        return res.status(400).send({status : false, message:"Invalid email or password"})
+        return res.status(400).send({status : false, message:"please enter  email id or password"})
     }
     let token = await jwt.sign({
         userId: user._id.toString(),
        
         iat: Math.floor(Date.now() / 1000),
         exp: Math.floor(Date.now() / 1000 + 24 * 60 * 60)
-    }, "Bookmanegment")
+    }, "Bookmanagement")
 
     res.setHeader("x-api-key",token)
         return res.status(200).send({ status: true, message: "Login Successfully", data: token })
 }
-
-
-
 
 module.exports.createUser=createUser
 module.exports.loginUser=loginUser
