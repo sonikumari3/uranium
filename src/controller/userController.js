@@ -85,7 +85,7 @@ const loginUser = async function(req,res){
         return res.status(400).send({status : false, message:"Invalid email or password"})
     }
     let token = await jwt.sign({
-        userId: _id.toString(),
+        userId: user._id.toString(),
        
         iat: Math.floor(Date.now() / 1000),
         exp: Math.floor(Date.now() / 1000 + 24 * 60 * 60)
