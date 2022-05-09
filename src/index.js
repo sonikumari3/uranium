@@ -5,9 +5,9 @@ const router = require('./route/route')
 
 const app = express()
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded())
+app.use(bodyParser.urlencoded({extended:true}))
 
-mongoose.connect('mongodb+srv://jaganreddy-functionup:ORj2ygJHT7jbS3y8@cluster0.nduth.mongodb.net/jaganreddy-24?retryWrites=true&w=majority',{
+mongoose.connect('mongodb+srv://jaganreddy-functionup:ORj2ygJHT7jbS3y8@cluster0.nduth.mongodb.net/Group22Database?retryWrites=true&w=majority',{
     useNewUrlParser:true
 })
 
