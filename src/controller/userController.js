@@ -20,6 +20,10 @@ const isValidObjectId = function(ObjectId){
     return mongoose.Types.ObjectId.isValidObjectId
 }
 
+const isValidTitle = function (value){
+    return ["Mr","Mrs","Miss"].indexOf(value) != -1
+}
+
 
 const createUser = async function(req,res){
   try{
@@ -47,6 +51,10 @@ const createUser = async function(req,res){
      if(!isValid(address)){
         return res.status(400).send({status:false , message:'Please provide address'})
      }
+
+     if (!isValidTitle(title)) {
+        return res.status(400).send({ status: false, message: 'Please provide appropriate title' })
+    }
      if (!(/^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/.test(data.email))) {
         return res.status(400).send({ status: false, message: 'email should be a valid email address' })
     }
