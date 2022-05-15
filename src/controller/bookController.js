@@ -137,39 +137,14 @@ const getBooksById = async function (req, res) {
         if (!findBookId)
             return res.status(404).send({ status: false, message: "No Book Data Found" });
 
-        let {
-            _id,
-            title,
-            excerpt,
-            userId,
-            category,
-            subcategory,
-            review,
-            isDeleted,
-            deletedAt,
-            releasedAt,
-            createdAt,
-            updatedAt,
-        } = findBookId;
+        // checking if book is not deleted and fields to select for response
 
         let reviewData = await reviewModel.find({ bookId: bookId, isDeleted: false }).select({ bookId: 1, reviewdBy: 1, rating: 1, review: 1 });
 
-        let bookDetails = {
-            _id,
-            title,
-            excerpt,
-            userId,
-            category,
-            subcategory,
-            review,
-            isDeleted,
-            deletedAt,
-            releasedAt,
-            createdAt,
-            updatedAt,
-            reviewData,
-        };
-        return res.status(200).send({ status: true, message: "All books", data: bookDetails });
+         
+        let bookDataWithReviews = JSON.parse(JSON.stringify(findBookId))
+        bookDataWithReviews.reviewData = reviewData
+        return res.status(200).send({ status: true, message: "All books", data: bookDataWithReviews });
     } catch (err) {
         return res.status(500).send({ status: false, Error: err.message });
     }
