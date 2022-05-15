@@ -16,6 +16,31 @@ const createReview = async function (req, res) {
     if (validator.isValidRequestBody(reviewData)) {
         return res.status(400).send({ status: false, message: 'Please provide input' })
     }
+    if (!validator.isValidObjectId(data)) {
+        return res.status(400).send({ status: false, message: "Invalid bookId." })
+    }
+    let { bookId, reviewedAt, rating } = reviewData
+
+    if (!validator.isValid(bookId)) {
+        return res.status(400).send({ status: false, message: 'Please provide bookId' })
+    }
+    if (!validator.isValidObjectId(bookId)) {
+        return res.status(400).send({ status: false, message: 'Please provide valid objectID' })
+    }
+    if (!validator.isValid(reviewedAt)) {
+        return res.status(400).send({ status: false, message: 'Please provide reviewed date' })
+    }
+    if (!validator.isValid(rating)) {
+        return res.status(400).send({ status: false, message: 'Please provide rating' })
+    }
+    
+    if (!/^[1-5]\d{0}$/.test(reviewData.rating)) {
+        return res.status(400).send({ status: false, message: "rating should be in 1 to 5 Number" })
+    }
+    if (!(reviewDate).test(reviewData.reviewedAt)) {
+        return res.status(400).send({ status: false, message: 'Please enter date in given format' })
+    }
+
     let books = await bookModel.findById({ _id: data },{ isDeleted: false })
 
     if (!books) {
@@ -32,30 +57,6 @@ const createReview = async function (req, res) {
         if(deletedBook){
             return res.status(404).send({ status: false, message: 'Book is deleted' })
         }
-    
-   
-    let { bookId, reviewedAt, rating } = reviewData
-    if (!validator.isValid(bookId)) {
-        return res.status(400).send({ status: false, message: 'Please provide bookId' })
-    }
-    if (!validator.isValidObjectId(bookId)) {
-        return res.status(400).send({ status: false, message: 'Please provide valid objectID' })
-    }
-    
-
-    if (!validator.isValid(reviewedAt)) {
-        return res.status(400).send({ status: false, message: 'Please provide reviewed date' })
-    }
-    if (!validator.isValid(rating)) {
-        return res.status(400).send({ status: false, message: 'Please provide rating' })
-    }
-    
-    if (!/^[1-5]\d{0}$/.test(reviewData.rating)) {
-        return res.status(400).send({ status: false, message: "rating should be in 1 to 5 Number" })
-    }
-    if (!(reviewDate).test(reviewData.reviewedAt)) {
-        return res.status(400).send({ status: false, message: 'Please enter date in given format' })
-    }
     // Creating review document in review collection
     let saveData = await reviewModel.create(reviewData)
 
