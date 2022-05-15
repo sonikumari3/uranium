@@ -92,19 +92,14 @@ const loginUser = async function (req, res) {
         return res.status(400).send({ status: false, message: "Email Id and password does not match" })
     }
 
-    // var token = jwt.sign(
-    //     { key_name: 'x-api-key' },
-    //      "Bookmanagement", {
-    //     expiresIn: '20min'
-    // }, { iat: Math.floor(Date.now() / 1000) });
     var token = jwt.sign(
         {userId: user._id.toString()},
          "Bookmanagement", {
-        expiresIn: '20min'
-    }, { iat: Math.floor(Date.now() / 1000) });
+        expiresIn: '24h'
+    });
 
 
-    res.setHeader("x-api-key", token)
+    res.setHeader("x-api-key", token)  
     return res.status(200).send({ status: true, message: "Login Successfully", data: token })
 }
 

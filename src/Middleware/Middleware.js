@@ -8,7 +8,13 @@ const Authentication=async function (req,res,next){
         return res.status(400).send({status:false,message:"Please enter token in header"})
     }
 
-    let decodedToken = jwt.verify(token,"Bookmanagement")
+    let decodedToken = jwt.verify(token,"Bookmanagement" ,{ignoreExpiration:true})
+    
+    if(Date.now()>decodedToken.exp*1000){
+        return res.status(401).send({status:false, msg:"Token expired"})
+    }
+    
+
     req.userId=decodedToken.userId
     if(!decodedToken){
         return res.status(400).send({status:false,message:"Please enter valid token"})
@@ -30,7 +36,7 @@ const Authorisation=async function(req,res,next){
     let decodedToken = jwt.verify(token,"Bookmanagement")
     
     let decoded= decodedToken.userId
-    console.log(decoded)
+    // console.log(decoded)
     let book= await bookModel.findById(bookId)
     if(!book){
         return res.status(404).send({status:false,message:"Book does not exist"})
