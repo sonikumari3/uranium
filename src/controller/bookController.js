@@ -226,7 +226,7 @@ const deleteBooks = async function (req, res) {
 
     let id = req.params.bookId
 
-    if (!isValidObjectId(id)) {
+    if (!validator.isValidObjectId(id)) {
         return res.status(400).send({ status: false, message: 'Please provide valid objectID' })
     }
 
