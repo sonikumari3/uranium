@@ -111,7 +111,7 @@ const getBooks = async function (req, res) {
         let books = await bookModel.find({ $and: [{ isDeleted: false }, data] })
             .select({ title: 1, excerpt: 1, userId: 1, category: 1, releasedAt: 1, reviews: 1 }).sort({ title: 1 });
 
-        // check data exits or not
+       
         if (books.length <= 0) {
             return res.status(404).send({ status: false, message: 'Data Not Found' })
         }
